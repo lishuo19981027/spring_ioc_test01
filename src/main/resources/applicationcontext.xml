@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--<bean id="beanFactory2" class="com.itheima.factory.MyBeanFactory2"> </bean>
+    <bean id="userDao2" factory-bean="beanFactory2" factory-method="userDao"> </bean>
+
+    <bean id="userDao1" class="com.itheima.factory.MyBeanFactory1" factory-method="userDao"> </bean>-->
+    <!--<bean id="userService" class="com.itheima.service.impl.UserServiceImpl">
+        <property name="stringList">
+            <list>
+                <value>aaa</value>
+                <value>bbb</value>
+                <value>ccc</value>
+            </list>
+        </property>
+        <property name="userDaoList">
+            <list>
+                <ref bean="userDao1"/>
+                <ref bean="userDao2"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="userDao1" class="com.itheima.dao.impl.UserDaoImpl"> </bean>
+    <bean id="userDao2" class="com.itheima.dao.impl.UserDaoImpl"> </bean>
+    <bean id="userDao3" class="com.itheima.dao.impl.UserDaoImpl"> </bean>-->
+    <!--配置druid数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/test"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456789"/>
+    </bean>
+    <!--配置SqlSessionFactorybean，作用是将sqlsessionfacory配置到spring容器中-->
+     <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+         <property name="dataSource" ref="dataSource"/>
+     </bean>
+    <!--MapperScannerConfiger,作用是扫描指定的包，产生Mapper对象存储到spring容器中-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.itheima.mapper"/>
+    </bean>
+    <bean id="userService" class="com.itheima.service.impl.UserServiceImpl">
+        <property name="userMapper" ref="userMapper"/>
+    </bean>
+    <!--配置connection-->
+    <!--<bean id="clazz" class="java.lang.Class" factory-method="forName">
+        <constructor-arg name="className" value="com.mysql.jdbc.Driver"> </constructor-arg>
+    </bean>
+    <bean id="connection" class="java.sql.DriverManager" factory-method="getConnection">
+        <constructor-arg name="url" value="jdbc:mysql://localhost:3306/test"/>
+        <constructor-arg name="user" value="root"/>
+        <constructor-arg name="password" value="123456789"/>
+    </bean>-->
+</beans>
